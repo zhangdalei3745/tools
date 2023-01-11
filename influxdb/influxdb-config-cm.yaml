@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  influxdb.conf: |
+    [meta]
+      dir = "/var/lib/influxdb/meta"
+
+    [data]
+      dir = "/var/lib/influxdb/data"
+      engine = "tsm1"
+      wal-dir = "/var/lib/influxdb/wal"
+    [http]
+      auth-enabled = true
+kind: ConfigMap
+metadata:
+  name: influxdb-config-cm

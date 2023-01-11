@@ -1,0 +1,25 @@
+global:
+  enabled: true
+  datacenter: dc1
+  image: "hub-pub.jdcloud.com/mesh/consul-kylinv10-amd64:2.8.1-sec-60b1272"
+  imageK8S: "hub-pub.jdcloud.com/mesh/consul-k8s-kylinv10-amd64:2.8.1-sec-22d2cb4"
+  imagePullSecrets:
+  - name: docker
+  acls:
+    manageSystemACLs: true
+server:
+  enabled: true
+  replicas: 1
+  bootstrapExpect: 1
+  storage: 10Gi
+  storageClass: jdcloud-lvm
+  connect: false
+client:
+  enabled: false
+# Values that configure the Consul UI.
+ui:
+  enabled: true
+  service:
+    enabled: true
+  additionalSpec:
+    sessionAffinity: ClientIP

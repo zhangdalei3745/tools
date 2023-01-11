@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+  labels:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: hub-pub.jdcloud.com/mesh/influxdb:1.8
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: influxdb
+          containerPort: 8086
+          protocol: TCP
+        volumeMounts:
+        - name: influxdb-data
+          mountPath: /var/lib/influxdb
+          subPath: influxdb
+        - name: influxdb-config
+          mountPath: /etc/influxdb
+      volumes:
+      - name: influxdb-data
+        persistentVolumeClaim:
+          claimName: influxdb-data-pvc
+      - name: influxdb-config
+        configMap:
+          name: influxdb-config-cm
